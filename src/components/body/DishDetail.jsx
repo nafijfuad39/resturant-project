@@ -5,7 +5,6 @@ const DishDetail = props => {
         <div>
              <Card
                 style={{
-                    width: '100%',
                     margin:'10px'
                 }}
                 >
@@ -25,7 +24,7 @@ const DishDetail = props => {
                     </CardText>
 
                 <hr />
-                <LoadComments comments={props.dish.comments} />
+                <LoadComments comments={props.comment} />
                 </CardBody>
                 </Card>
         </div>

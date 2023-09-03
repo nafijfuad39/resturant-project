@@ -1,13 +1,20 @@
 import { Component } from 'react'
-import DISHES from './../../data/dishes';
 import MenuItem from './MenuItem';
 import DishDetail from './DishDetail';
 import { CardColumns , Modal, ModalBody, ModalFooter , Button } from 'reactstrap';
+import {connect} from "react-redux";
+
+const mapStateToProps = state=>{
+    return{
+        dishes: state.dishes,
+        comments: state.comments
+    }
+}
 
 
-export default class Menu extends Component {
+
+class Menu extends Component {
     state = {
-        dishes: DISHES,
         selectedDish:null,
         modalOpen:false,
     }
@@ -26,7 +33,7 @@ export default class Menu extends Component {
 
 
   render() {
-    const menu =this.state.dishes.map(item => {
+    const menu =this.props.dishes.map(item => {
       return(
         <MenuItem 
         dish = {item} 
@@ -37,37 +44,41 @@ export default class Menu extends Component {
     })
     let dishDetail = null;
     if(this.state.selectedDish  != null){
-      dishDetail = <DishDetail dish={this.state.selectedDish}/>
+      const comments = this.props.comments.filter(comment => {
+        return comment.dishId === this.state.selectedDish.id;
+
+      })
+      dishDetail = <DishDetail dish={this.state.selectedDish}
+      comment = {comments}/>
     }
     return (
       <div className='container'>
 
-         
+<div className="row">
+  <div className="col-lg-6">
 
-          <CardColumns >
-
-
+    
+  <CardColumns>
             {menu}
-
-            </CardColumns>
-
-
-
-        
-                      
+  </CardColumns>
+  </div>
+  <div className="col-lg-6">
           <Modal isOpen= {this.state.modalOpen} onClick={this.toggleModal}>
               <ModalBody>
                   {dishDetail}
               </ModalBody>
               <ModalFooter>
-                <Button color="Close"  onClick={this.toggleModal}>
+                <Button color="secondary"  onClick={this.toggleModal}>
                    Close
                 </Button>
               </ModalFooter>
           </Modal>
-          
 
+  </div>
+</div>
       </div>
     )
   }
 }
+
+export default connect(mapStateToProps)(Menu);

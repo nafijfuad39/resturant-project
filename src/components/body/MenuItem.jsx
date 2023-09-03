@@ -3,10 +3,11 @@ const MenuItem = props => {
 
     return (
         <div>
-       
-             <Card
+          <div className="container">
+            
+                <Card
                     style={{
-                        width:'40%',
+                        
                         margin:'10px'
                     }}
                 >
@@ -23,7 +24,10 @@ const MenuItem = props => {
 
                 </CardBody>
                 </Card>
-          
+
+      
+            </div>
+        
         </div>
     );
 };
